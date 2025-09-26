@@ -15,17 +15,17 @@ pipeline {
             }
             steps {
                 sh '''
-                    echo "📂 Listing current directory..."
+                    echo " Listing current directory..."
                     ls -la
 
-                    echo "📦 Checking npm and node versions..."
+                    echo " Checking npm and node versions..."
                     npm --version
                     node --version
 
-                    echo "📁 Creating local npm cache directory..."
+                    echo " Creating local npm cache directory..."
                     mkdir -p "$npm_config_cache"
 
-                    echo "📦 Installing dependencies with npm ci..."
+                    echo " Installing dependencies with npm ci..."
                     npm ci
                 '''
             }
@@ -41,16 +41,31 @@ pipeline {
                 echo 'Test Stage'
                 
                 sh '''
-                    echo "🧪 Running tests..."
+                    echo " Running tests..."
                     if [ -f src/App.js ]; then
-                        echo "✅ src/App.js exists."
+                        echo " src/App.js exists."
                     else
-                        echo "⚠️ src/App.js not found. Skipping test."
+                        echo " src/App.js not found. Skipping test."
                     fi
 
                     npm test
                 '''
 
+            }
+        }
+        stage('E2E'){
+            agent{
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.55.0-noble'
+                    reuseNode true
+                }
+            }
+            steps{
+                sh '''
+                    npm install -g serve
+                    serve -s build
+                    npx playwright test
+                '''
             }
         }
     }
