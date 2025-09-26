@@ -18,9 +18,8 @@ pipeline {
                     ls -la
                     node --version
                     npm --version
-                    npm config set cache $(pwd)/.npm-cache
-                    npm config set prefix $(pwd)/.npm-prefix
                     npm ci
+
                 '''
             }
         }
