@@ -67,6 +67,9 @@ pipeline {
             }
             steps{
                 sh '''
+                    
+                    mkdir -p "$npm_config_cache"
+
                     npm install -g serve
                     node_modules/.bin/serve -s build &
                     sleep 5
