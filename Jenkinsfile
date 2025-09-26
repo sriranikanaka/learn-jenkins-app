@@ -9,12 +9,13 @@ pipeline {
                 }
             }
             steps {
-                sh '''
-                  ls -la
-                  node --version
-                  npm --version
-                  npm ci
-                '''
+                                sh '''
+                                    ls -la
+                                    node --version
+                                    npm --version
+                                    npm config set cache $(pwd)/.npm-cache --global
+                                    npm ci
+                                '''
             }
         }
     }
