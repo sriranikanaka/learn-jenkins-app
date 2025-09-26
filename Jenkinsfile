@@ -30,7 +30,7 @@ pipeline {
                 '''
             }
         }
-        stage('Test'{
+        stage('Test'){
             steps{
                 echo 'Test Stage'
                 sh '''
@@ -39,6 +39,6 @@ pipeline {
                     npm test
                 '''
             }
-        })
+        }
     }
 }
