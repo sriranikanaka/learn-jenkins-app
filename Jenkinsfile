@@ -61,6 +61,10 @@ pipeline {
                     
                 }
             }
+            environment {
+                // Use a local cache directory to avoid EACCES errors
+                npm_config_cache = "${WORKSPACE}/.npm-cache"
+            }
             steps{
                 sh '''
                     npm install -g serve
