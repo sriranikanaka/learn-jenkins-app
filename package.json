@@ -12,12 +12,16 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
+  
+
+"scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --testResultsProcessor=\"jest-junit\"",
+    "test": "react-scripts test --testResultsProcessor=\"jest-junit\" --detectOpenHandles",
     "eject": "react-scripts eject"
   },
+
+
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -37,12 +41,13 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.39.0",
-    "@types/node": "^20.8.6"
-  },
+  "@playwright/test": "^1.39.0",
+  "@types/node": "^20.8.6",
+  "serve": "^14.2.0"
+},
   "jest-junit": {
     "suiteName": "jest tests",
-    "outputDirectory": "jest-results",
+    "outputDirectory": "test-results",
     "outputName": "junit.xml",
     "uniqueOutputName": "false",
     "classNameTemplate": "{classname}-{title}",
