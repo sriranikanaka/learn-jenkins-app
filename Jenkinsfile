@@ -53,30 +53,33 @@ pipeline {
 
             }
         }
-        stage('E2E'){
-            agent{
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.55.0-noble'
-                    reuseNode true
-                    
-                }
-            }
-            environment {
-                // Use a local cache directory to avoid EACCES errors
-                npm_config_cache = "${WORKSPACE}/.npm-cache"
-            }
-            steps{
-                sh '''
-                    
-                    mkdir -p "$npm_config_cache"
-
-                    npm install -g serve
-                    node_modules/.bin/serve -s build &
-                    sleep 5
-                    npx playwright test
-                '''
-            }
+        stage('E2E') {
+    agent {
+        docker {
+            image 'mcr.microsoft.com/playwright:v1.55.0-noble'
+            reuseNode true
         }
+    }
+    environment {
+        npm_config_cache = "${WORKSPACE}/.npm-cache"
+    }
+    steps {
+        sh '''
+            echo "📁 Creating local npm cache directory..."
+            mkdir -p "$npm_config_cache"
+
+            echo "📦 Installing serve globally..."
+            npm install -g serve
+
+            echo "🚀 Starting local server..."
+            node_modules/.bin/serve -s build &
+
+            echo "🧪 Running Playwright tests..."
+            sleep 5
+            npx playwright test
+        '''
+    }
+}
     }
     post{
         always{
