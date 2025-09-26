@@ -35,7 +35,7 @@ pipeline {
                 echo 'Test Stage'
                 sh '''
                     echo "🧪 Running tests..."
-                    test -f 'src/app.js'
+                    test -f 'src/App.js'
                     npm test
                 '''
             }
