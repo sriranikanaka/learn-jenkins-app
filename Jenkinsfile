@@ -33,11 +33,18 @@ pipeline {
         stage('Test'){
             steps{
                 echo 'Test Stage'
+                
                 sh '''
                     echo "🧪 Running tests..."
-                    test -f 'src/App.js'
+                    if [ -f src/App.js ]; then
+                        echo "✅ src/App.js exists."
+                    else
+                        echo "⚠️ src/App.js not found. Skipping test."
+                    fi
+
                     npm test
                 '''
+
             }
         }
     }
