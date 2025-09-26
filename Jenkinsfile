@@ -1,7 +1,7 @@
 pipeline {
     agent any
-    stages {
 
+    stages {
         stage('Build') {
             agent {
                 docker {
@@ -9,14 +9,24 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                // Use a local cache directory to avoid EACCES errors
+                npm_config_cache = "${WORKSPACE}/.npm-cache"
+            }
             steps {
                 sh '''
+                    echo "📂 Listing current directory..."
                     ls -la
+
+                    echo "📦 Checking npm and node versions..."
                     npm --version
                     node --version
-                    npm install
-                    
 
+                    echo "📁 Creating local npm cache directory..."
+                    mkdir -p "$npm_config_cache"
+
+                    echo "📦 Installing dependencies with npm ci..."
+                    npm ci
                 '''
             }
         }
