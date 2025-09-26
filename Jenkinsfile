@@ -17,6 +17,8 @@ pipeline{
                    npm run build
                    ls -la
                 '''
+                }
+            }
         }
     }
 }
